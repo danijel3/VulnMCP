@@ -8,7 +8,14 @@ def register(mcp: FastMCP) -> None:
 
     classifier = SeverityClassifier()
 
-    @mcp.tool
+    @mcp.tool(
+        annotations={
+            "readOnlyHint": True,
+            "destructiveHint": False,
+            "idempotentHint": True,
+            "openWorldHint": False,
+        }
+    )
     def classify_severity(
         description: str, language: str | None = None
     ) -> dict:

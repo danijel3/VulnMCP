@@ -10,7 +10,14 @@ def register(mcp: FastMCP) -> None:
 
     classifier = CWEClassifier()
 
-    @mcp.tool
+    @mcp.tool(
+        annotations={
+            "readOnlyHint": True,
+            "destructiveHint": False,
+            "idempotentHint": True,
+            "openWorldHint": False,
+        }
+    )
     def classify_cwe(description: str) -> dict:
         """Classify a vulnerability description into CWE categories.
 
@@ -26,7 +33,14 @@ def register(mcp: FastMCP) -> None:
         """
         return classifier.classify(description)
 
-    @mcp.tool
+    @mcp.tool(
+        annotations={
+            "readOnlyHint": True,
+            "destructiveHint": False,
+            "idempotentHint": True,
+            "openWorldHint": True,
+        }
+    )
     def get_recent_vulnerabilities_by_cwe(cwe_id: str) -> list[dict]:
         """Fetch the 3 most recent vulnerabilities for a given CWE ID from Vulnerability Lookup.
 
