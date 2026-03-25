@@ -1,8 +1,7 @@
-import requests
 from fastmcp import FastMCP
 
 from vulnmcp.models.classifier import CWEClassifier
-from vulnmcp.skills.vulnerability_lookup import _base_url
+from vulnmcp.skills.vulnerability_lookup import _base_url, _get_session
 
 
 def register(mcp: FastMCP) -> None:
@@ -55,7 +54,7 @@ def register(mcp: FastMCP) -> None:
         if not cwe_id.startswith("CWE-"):
             cwe_id = f"CWE-{cwe_id}"
 
-        response = requests.get(
+        response = _get_session().get(
             f"{_base_url()}/api/vulnerability/",
             params={
                 "source": "cvelistv5",
