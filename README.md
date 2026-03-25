@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/VulnMCP-logo.png" alt="VulnMCP logo" width="400">
+</p>
+
 # VulnMCP
 
 **VulnMCP** is an [MCP](https://modelcontextprotocol.io/) server built with [FastMCP](https://gofastmcp.com/) that provides AI clients, chat agents, and other automated systems with tools for vulnerability management. It offers modular "skills" that can be easily extended or integrated, enabling intelligent analysis and automated insights on software vulnerabilities.
