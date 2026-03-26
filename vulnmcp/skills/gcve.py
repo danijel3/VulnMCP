@@ -136,10 +136,15 @@ def register(mcp: FastMCP) -> None:
     def list_gcve_references() -> dict:
         """List GCVE references (vulnerability dataset sources and their GNA mappings).
 
+        This includes KEV catalog entries with their Vulnerability-Lookup
+        origin UUIDs, which can be used with the list_kev_entries tool's
+        vulnerability_lookup_origin parameter to query a specific catalog.
+
         Downloads references if not already cached locally.
 
         Returns:
-            A dict with the reference categories and their entries.
+            A dict with the reference categories and their entries, including
+            KEV catalogs with uuid, short_name, and optional gna_id fields.
         """
         update_references()
         return load_references()
