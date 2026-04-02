@@ -11,7 +11,7 @@
 * **Vulnerability Severity Classification** -- Automatically assess the criticality of vulnerabilities using CIRCL's fine-tuned NLP models:
   [CIRCL/vulnerability-severity-classification-roberta-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-roberta-base) (English) and [CIRCL/vulnerability-severity-classification-chinese-macbert-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-chinese-macbert-base) (Chinese).
 * **CWE Classification** -- Predict CWE categories from vulnerability descriptions using [CIRCL/cwe-parent-vulnerability-classification-roberta-base](https://huggingface.co/CIRCL/cwe-parent-vulnerability-classification-roberta-base).
-* **Vulnerability Lookup** -- Query the [Vulnerability Lookup](https://vulnerability.circl.lu) API to get detailed information about specific CVEs or search vulnerabilities by source, CWE, product, or date.
+* **Vulnerability Lookup** -- Query the [Vulnerability Lookup](https://vulnerability.circl.lu) API to get detailed information about specific CVEs, search vulnerabilities by source, CWE, product, or date, find community comments, and discover curated vulnerability bundles.
 * **KEV Catalog** -- Browse and filter Known Exploited Vulnerability (KEV) entries, check whether a CVE appears in a KEV catalog, find recently added entries, and filter by catalog origin (CISA KEV, CIRCL, EUVD KEV).
 * **GCVE Registry** -- Query the [GCVE](https://gcve.eu) Global Numbering Authority (GNA) registry and references to discover vulnerability allocators and KEV catalog identifiers.
 * **Modular Architecture** -- Easily add new skills or tools to expand the functionality of the MCP server.
@@ -56,6 +56,8 @@ poetry run fastmcp run vulnmcp/server.py --transport http --host 127.0.0.1 --por
 | `search_sightings` | Search vulnerability sightings (seen/exploited/patched/etc.) with filters to identify what is actively discussed or abused. |
 | `create_sighting` | Create a new sighting for a vulnerability (requires API permissions on most instances). |
 | `get_most_sighted_vulnerabilities` | Retrieve a ranking of vulnerabilities by sighting activity to help prioritize important issues. |
+| `search_comments` | Search community comments related to vulnerabilities, with filters by vulnerability ID or author. |
+| `search_bundles` | Search curated vulnerability bundles (grouped CVEs for a campaign, product, or incident), with filters by vulnerability ID or author. |
 | `list_kev_entries` | List and filter KEV catalog entries by vulnerability ID, status reason, exploited flag, date range, author, or origin catalog UUID. |
 | `guess_cpes` | Query cpe-guesser with product keywords to infer likely CPE identifiers. |
 | `list_gna_entries` | List all Global Numbering Authorities (GNA) from the GCVE registry. |
@@ -82,6 +84,12 @@ poetry run fastmcp call vulnmcp/server.py search_vulnerabilities cwe=CWE-89 per_
 
 # Retrieve top most-sighted vulnerabilities
 poetry run fastmcp call vulnmcp/server.py get_most_sighted_vulnerabilities limit=5
+
+# Search comments for a specific CVE
+poetry run fastmcp call vulnmcp/server.py search_comments vuln_id=CVE-2024-3094
+
+# Search bundles related to a CVE
+poetry run fastmcp call vulnmcp/server.py search_bundles vuln_id=CVE-2024-3094
 
 # Check if a CVE is in a KEV catalog
 poetry run fastmcp call vulnmcp/server.py list_kev_entries vuln_id=CVE-2021-44228
