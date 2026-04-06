@@ -36,6 +36,7 @@ All models are downloaded from Hugging Face Hub on first invocation and cached l
 
 - **Severity (English)**: `CIRCL/vulnerability-severity-classification-roberta-base` — outputs `low`, `medium`, `high`, `critical`
 - **Severity (Chinese)**: `CIRCL/vulnerability-severity-classification-chinese-macbert-base` — outputs `低`, `中`, `高` (mapped to English equivalents)
+- **Severity (Russian)**: `CIRCL/vulnerability-severity-classification-russian-ruRoberta-large` — outputs `low`, `medium`, `high`, `critical`
 - **CWE classification**: `CIRCL/cwe-parent-vulnerability-classification-roberta-base` — predicts parent CWE categories (26 classes). Uses `child_to_parent_mapping.json` for hierarchy mapping.
 
 ### Vulnerability Lookup API

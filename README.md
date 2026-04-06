@@ -9,7 +9,7 @@
 ## Features
 
 * **Vulnerability Severity Classification** -- Automatically assess the criticality of vulnerabilities using CIRCL's fine-tuned NLP models:
-  [CIRCL/vulnerability-severity-classification-roberta-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-roberta-base) (English) and [CIRCL/vulnerability-severity-classification-chinese-macbert-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-chinese-macbert-base) (Chinese).
+  [CIRCL/vulnerability-severity-classification-roberta-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-roberta-base) (English), [CIRCL/vulnerability-severity-classification-chinese-macbert-base](https://huggingface.co/CIRCL/vulnerability-severity-classification-chinese-macbert-base) (Chinese), and [CIRCL/vulnerability-severity-classification-russian-ruRoberta-large](https://huggingface.co/CIRCL/vulnerability-severity-classification-russian-ruRoberta-large) (Russian).
 * **CWE Classification** -- Predict CWE categories from vulnerability descriptions using [CIRCL/cwe-parent-vulnerability-classification-roberta-base](https://huggingface.co/CIRCL/cwe-parent-vulnerability-classification-roberta-base).
 * **Vulnerability Lookup** -- Query the [Vulnerability Lookup](https://vulnerability.circl.lu) API to get detailed information about specific CVEs, search vulnerabilities by source, CWE, product, or date, find community comments, and discover curated vulnerability bundles.
 * **KEV Catalog** -- Browse and filter Known Exploited Vulnerability (KEV) entries, check whether a CVE appears in a KEV catalog, find recently added entries, and filter by catalog origin (CISA KEV, CIRCL, EUVD KEV).
@@ -48,7 +48,7 @@ poetry run fastmcp run vulnmcp/server.py --transport http --host 127.0.0.1 --por
 
 | Tool | Description |
 |------|-------------|
-| `classify_severity` | Classify vulnerability severity (low/medium/high/critical) from a text description. Supports English and Chinese with auto-detection. |
+| `classify_severity` | Classify vulnerability severity (low/medium/high/critical) from a text description. Supports English, Chinese, and Russian with auto-detection. |
 | `classify_cwe` | Predict CWE categories from a vulnerability description. Returns top-5 predictions with parent CWE mapping. |
 | `get_recent_vulnerabilities_by_cwe` | Fetch the 3 most recent CVEs for a given CWE ID. |
 | `get_vulnerability` | Look up a specific vulnerability by ID (e.g. CVE-2025-14847) with optional comments, sightings, bundles, linked vulnerabilities, and KEV enrichment. |
