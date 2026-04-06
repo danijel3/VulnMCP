@@ -7,6 +7,7 @@ from transformers import pipeline
 
 SEVERITY_ENGLISH_MODEL = "CIRCL/vulnerability-severity-classification-roberta-base"
 SEVERITY_CHINESE_MODEL = "CIRCL/vulnerability-severity-classification-chinese-macbert-base"
+SEVERITY_RUSSIAN_MODEL = "CIRCL/vulnerability-severity-classification-russian-ruRoberta-large"
 CWE_MODEL = "CIRCL/cwe-parent-vulnerability-classification-roberta-base"
 
 # Mapping Chinese labels to English equivalents
@@ -25,12 +26,21 @@ def _contains_chinese(text: str) -> bool:
     return False
 
 
+def _contains_cyrillic(text: str) -> bool:
+    """Check if text contains Cyrillic characters."""
+    for char in text:
+        if "CYRILLIC" in unicodedata.name(char, ""):
+            return True
+    return False
+
+
 class SeverityClassifier:
     """Lazy-loading wrapper around the CIRCL vulnerability severity models."""
 
     def __init__(self) -> None:
         self._english_pipeline = None
         self._chinese_pipeline = None
+        self._russian_pipeline = None
 
     @property
     def english_pipeline(self):
@@ -48,6 +58,14 @@ class SeverityClassifier:
             )
         return self._chinese_pipeline
 
+    @property
+    def russian_pipeline(self):
+        if self._russian_pipeline is None:
+            self._russian_pipeline = pipeline(
+                "text-classification", model=SEVERITY_RUSSIAN_MODEL
+            )
+        return self._russian_pipeline
+
     def classify(
         self, description: str, language: str | None = None
     ) -> dict:
@@ -55,7 +73,7 @@ class SeverityClassifier:
 
         Args:
             description: The vulnerability description text.
-            language: Force language selection ("en" or "zh").
+            language: Force language selection ("en", "zh", or "ru").
                       If None, auto-detects based on text content.
 
         Returns:
@@ -66,12 +84,21 @@ class SeverityClassifier:
             raise ValueError("Description must not be empty.")
 
         if language is None:
-            language = "zh" if _contains_chinese(description) else "en"
+            if _contains_chinese(description):
+                language = "zh"
+            elif _contains_cyrillic(description):
+                language = "ru"
+            else:
+                language = "en"
 
         if language == "zh":
             result = self.chinese_pipeline(description)[0]
             label = CHINESE_LABEL_MAP.get(result["label"], result["label"])
             model_used = SEVERITY_CHINESE_MODEL
+        elif language == "ru":
+            result = self.russian_pipeline(description)[0]
+            label = result["label"].lower()
+            model_used = SEVERITY_RUSSIAN_MODEL
         else:
             result = self.english_pipeline(description)[0]
             label = result["label"].lower()

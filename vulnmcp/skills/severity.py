@@ -24,13 +24,14 @@ def register(mcp: FastMCP) -> None:
         Uses CIRCL's fine-tuned transformer models:
         - English descriptions: RoBERTa-based model (low/medium/high/critical)
         - Chinese descriptions: MacBERT-based model (low/medium/high)
+        - Russian descriptions: ruRoBERTa-large model (low/medium/high/critical)
 
         Language is auto-detected from the text unless explicitly specified.
 
         Args:
-            description: The vulnerability description text (English or Chinese).
-            language: Optional language hint — "en" for English, "zh" for Chinese.
-                      Auto-detected if omitted.
+            description: The vulnerability description text (English, Chinese, or Russian).
+            language: Optional language hint — "en" for English, "zh" for Chinese,
+                      "ru" for Russian. Auto-detected if omitted.
 
         Returns:
             A dict with: label (severity), score (confidence), model, language.
