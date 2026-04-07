@@ -22,8 +22,8 @@ def register(mcp: FastMCP) -> None:
         """Classify the severity of a vulnerability based on its description.
 
         Uses CIRCL's fine-tuned transformer models:
-        - English descriptions: RoBERTa-based model (low/medium/high/critical)
-        - Chinese descriptions: MacBERT-based model (low/medium/high)
+        - English descriptions: RoBERTa-base model (low/medium/high/critical)
+        - Chinese descriptions: MacBERT-base model (low/medium/high)
         - Russian descriptions: ruRoBERTa-large model (low/medium/high/critical)
 
         Language is auto-detected from the text unless explicitly specified.
